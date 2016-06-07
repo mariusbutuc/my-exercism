@@ -9,13 +9,11 @@ class Hamming
 
     control_strand    = strand1.chars
     variation_strand  = strand2.chars
-    mutations_count   = 0
 
-    control_strand.each_with_index do |nucleotide, index|
-      next if variation_strand[index] == nucleotide
-      mutations_count += 1
+    mutation_indices = control_strand.each_index.select do |index|
+      control_strand[index] != variation_strand[index]
     end
 
-    mutations_count
+    mutation_indices.count
   end
 end
