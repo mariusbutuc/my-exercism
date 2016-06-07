@@ -3,17 +3,14 @@ module BookKeeping
 end
 
 class Hamming
-  def self.compute(strand1, strand2)
-    raise ArgumentError if strand1.length != strand2.length
-    return 0            if strand1 == strand2
+  def self.compute(control_strand, variation_strand)
+    fail ArgumentError  if control_strand.length != variation_strand.length
+    return 0            if control_strand        == variation_strand
 
-    control_strand    = strand1.chars
-    variation_strand  = strand2.chars
+    comparable_nucleotides = control_strand.chars.zip(variation_strand.chars)
 
-    mutation_indices = control_strand.each_index.select do |index|
-      control_strand[index] != variation_strand[index]
+    comparable_nucleotides.count do |control_nucleotide, variation_nucleotide|
+      control_nucleotide != variation_nucleotide
     end
-
-    mutation_indices.count
   end
 end
